@@ -4,22 +4,8 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
-from matplotlib.collections import LineCollection
-import plotly.express as px
-import scipy as sp
-from sklearn import preprocessing, decomposition
-from sklearn.model_selection import cross_val_score
-from sklearn.model_selection import GridSearchCV
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import confusion_matrix, classification_report
-from sklearn.metrics import roc_curve, auc
-from scipy.cluster.hierarchy import dendrogram, linkage, fcluster
-import seaborn as sns
-import warnings
-
-warnings.simplefilter("ignore", np.VisibleDeprecationWarning)
 
 st.write('# Détecteur de faux billets')
 
@@ -46,7 +32,7 @@ if uploaded_file is not None:
     st.write(tested_notes)
     tested_notes_into_model = tested_notes.drop(columns=['id'])
     probs = logreg.predict_proba(tested_notes_into_model)
-    results = pd.DataFrame(probs, index=tested_notes.id, columns=['Vrai', 'Faux'])
+    results = pd.DataFrame(probs, index=tested_notes.id, columns=['Faux', 'Vrai'])
     conditions = [results['Vrai'] >= 0.5, results['Vrai'] < 0.5]
     results['Prédiction'] = np.select(conditions, ['Vrai', 'Faux'])
 
