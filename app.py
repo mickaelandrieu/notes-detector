@@ -25,12 +25,11 @@ logreg.fit(X_train, y_train)
 
 uploaded_file = st.file_uploader('Soumettez votre liste de billets')
 if uploaded_file is not None:
-    ## TODO, use PCA to transform the new data submitted (set components for the new data)
     st.write('## Affichage des billets à détecter :')
     tested_notes = pd.read_csv(uploaded_file)
     st.write(tested_notes)
-
-    ## TODO 2: extract into a function
+    
+    # Apply detection model on the submitted notes
     tested_notes_into_model = tested_notes.drop(columns=['id'])
     probs = logreg.predict_proba(tested_notes_into_model)
     results = pd.DataFrame(probs, index=tested_notes.id, columns=['Faux', 'Vrai'])
